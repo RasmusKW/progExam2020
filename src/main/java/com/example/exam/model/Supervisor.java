@@ -33,6 +33,8 @@ public class Supervisor
         this.name = name;
     }
 
+    public Supervisor() { }
+
     /**
      * This function adds a student to the supervisor, remember to save after via a service, or the DB will not update.
      * @param student

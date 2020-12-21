@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Eksamens Opgave</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <link th:href="@{/css/main.css}">
+</head>
+<!--    thymeleaf injected header    -->
+<header th:replace="fragments/fragments.html :: header"></header>
+<body>
+<!--    section containing input form for a student    -->
+<section class="students-creator">
+    <form class="my-form" id="student-form">
+        <input type="text" name="name" placeholder="name" value="">
+        <input type="email" name="email" placeholder="email" value="">
+        <!--    todo js prevent and js send    -->
+        <input type="submit" value="New Student" onclick="">
+    </form>
+</section>
+
+<section class="student-table">
+</section>
+
+</body>
+</html>
