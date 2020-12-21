@@ -1,5 +1,6 @@
 package com.example.exam.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Supervisor
     @OneToMany(cascade = CascadeType.DETACH, mappedBy = "supervisor" ) //Cascade type detach, because we dont want to delete a supervisor,
     // when a student is deleted and vice versa.
     @Nullable // nullable so that we can delete the student, without causing error.
+    @JsonManagedReference("supervisor")
     private Set<Student> students = new HashSet<>();
 
 

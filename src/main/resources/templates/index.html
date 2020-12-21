@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Eksamens Opgave</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script th:src="@{/js/main.js}"></script>
     <link th:href="@{/css/main.css}">
 </head>
@@ -12,16 +13,93 @@
 <body>
 <!--    section containing input form for a student    -->
 <section class="students-creator">
-    <form class="my-form" id="student-form">
-        <input type="text" name="name" placeholder="name" value="">
-        <input type="email" name="email" placeholder="email" value="">
-        <!--    todo js prevent and js send    -->
-        <input type="submit" value="New Student" onclick="">
+
+
+    <!------------------------------------------------------ Add Student ---------------------------------------------------------------------->
+
+    <form id="studentform" action="#">
+        <input type="text" name="name" placeholder="name" id="studentName">
+        <input type="email" name="email" placeholder="email" id="studentEmail">
+        <select name="supervisorId" id="supervisorId">
+            <option th:each="supervisor:${supervisors}"  th:text="'Supervisor: ' + ${supervisor.getName()}" th:value="${supervisor.getSupervisorId()}"></option>
+        </select>
+
+        <input type="submit" onclick="addStudent()" value="New Student">
     </form>
+
+    <!------------------------------------------------------ Update Student ---------------------------------------------------------------------->
+
+    <form id="updateform" action="#">
+        <select name="studentId" id="updateId" onchange="myFunction()">
+            <option id="updateStudentId" th:each="student:${students}" th:text="'Student: ' + ${student.getStudentName()}" th:value="${student.getStudentId()}">
+
+            </option>
+        </select>
+        <input type="text" name="name" id="updateStudentName">
+        <input type="email" name="email" id="updateStudentEmail">
+        <select name="supervisorId" id="updateSupervisorId">
+            <option th:each="supervisor:${supervisors}"  th:text="'Supervisor: ' + ${supervisor.getName()}" th:value="${supervisor.getSupervisorId()}"></option>
+        </select>
+
+        <input type="submit" onclick="updateStudent()" value="Update Student">
+    </form>
+
+
+
+
+    <!------------------------------------------------------ Delete Student ---------------------------------------------------------------------->
+
+    <form id="deleteform" action="#">
+        <select name="studentId" id="deleteId">
+            <option th:each="student:${students}" th:text="'Student: ' + ${student.getStudentName()}" th:value="${student.getStudentId()}">
+
+            </option>
+        </select>
+
+
+        <input type="submit" onclick="deleteStudent()" value="Delete Student">
+    </form>
+
 </section>
 
+<!------------------------------------------------------ Student Table ---------------------------------------------------------------------->
 <section class="student-table">
+    <table>
+        <thead>
+        <tr>
+        <th>Navn</th>
+        <th>Mail</th>
+        <th>Supervisor</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        <tr th:id="'myRowId' + ${student.getStudentId()}" th:each="student: ${students}">
+            <td th:text="${student?.getStudentName()}">Navn</td>
+            <td th:text="${student?.getStudentEmail()}">Mail</td>
+            <td th:text="${student?.getSupervisor().getName()}">Supervisor</td>
+        </tr>
+        </tbody>
+    </table>
 </section>
 
 </body>
+
+<!---->
+<script>
+    function myFunction() {
+        var selectedID = document.getElementById("updateId").value;
+        var rowElement = document.getElementById("myRowId" + selectedID)
+        var studentName = rowElement.childNodes[1].innerHTML;
+        var studentEmail = rowElement.childNodes[3].innerHTML;
+        console.log(rowElement.childNodes)
+        console.log(studentEmail)
+        document.getElementsByName('name')[1].value = studentName;
+        document.getElementsByName('email')[1].value = studentEmail;
+    }
+</script>
+<script>
+    preventFormDefault($("#studentform"));
+    preventFormDefault($("#updateform"));
+    preventFormDefault($("#deleteform"));
+</script>
 </html>

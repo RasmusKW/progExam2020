@@ -2,6 +2,7 @@ package com.example.exam.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.Nullable;
 import net.bytebuddy.implementation.bind.annotation.Super;
 
@@ -26,6 +27,7 @@ public class Student
     @ManyToOne
     @JoinColumn(name = "supervisor_id")
     @Nullable
+    @JsonBackReference("supervisor")
     private Supervisor supervisor;
 
     /******************************* Constructor and Methods ******************************/
@@ -72,13 +74,13 @@ public class Student
         this.studentName = studentName;
     }
 
-    public String getStudentEmail()
-    {
+
+
+    public String getStudentEmail() {
         return studentEmail;
     }
 
-    public void setStudentEmail(String studentEmail)
-    {
+    public void setStudentEmail(String studentEmail) {
         this.studentEmail = studentEmail;
     }
 
