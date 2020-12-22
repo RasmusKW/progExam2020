@@ -22,11 +22,34 @@ function addStudent()
         }),
         success:function (data) {
             console.log(data)
+            let selectElement = document.getElementById("updateId")
+            let optionElement = document.createElement("option")
+
+
+            optionElement.id = "updateStudentId" + data.studentId
+            optionElement.innerHTML = "New Student: " + data.studentName
+            optionElement.value = data.studentId
+            selectElement.appendChild(optionElement)
+
+            let deleteSelectElement = document.getElementById("deleteId")
+            let deleteOptionElement = document.createElement("option")
+
+
+            deleteOptionElement.id = "deleteStudentId" + data.studentId
+            deleteOptionElement.innerHTML = "New Student: " + data.studentName
+            deleteOptionElement.value = data.studentId
+            deleteSelectElement.appendChild(deleteOptionElement)
+
             let tableBodyElement = document.getElementById("tableBody")
             let tableRowElement = document.createElement("TR")
+
+            tableRowElement.id = "myRowId" + data.studentId
+
             let nameDataElement = document.createElement("TD")
             let emailDataElement = document.createElement("TD")
             let supervisorDataElement = document.createElement("TD")
+
+
             nameDataElement.innerHTML = data.studentName
             emailDataElement.innerHTML = data.studentEmail
             supervisorDataElement.innerHTML = data.supervisor.name
@@ -34,6 +57,8 @@ function addStudent()
             tableRowElement.appendChild(emailDataElement)
             tableRowElement.appendChild(supervisorDataElement)
             tableBodyElement.appendChild(tableRowElement)
+
+
         },
 
         error:function(data) {
@@ -66,11 +91,11 @@ function updateStudent()
         success:function (data) {
             console.log(data)
             let rowElement = document.getElementById("myRowId" + studentId)
-            let selectElement = document.getElementById("updateStudentId" + studentId)
-            selectElement.childNodes[2].innerHTML = data.studentName
-            rowElement.childNodes[1].innerHTML = data.studentName
-            rowElement.childNodes[3].innerHTML = data.studentEmail
-            rowElement.childNodes[5].innerHTML = data.supervisor.name
+            let optionElement = document.getElementById("updateStudentId" + studentId)
+            optionElement.innerHTML = data.studentName
+            rowElement.children[0].innerHTML = data.studentName
+            rowElement.children[1].innerHTML = data.studentEmail
+            rowElement.children[2].innerHTML = data.supervisor.name
 
         },
 
@@ -92,6 +117,12 @@ function deleteStudent()
             studentId: studentId,
         }),
         success:function (data) {
+            let rowElement = document.getElementById("myRowId" + studentId)
+            let optionElement = document.getElementById("deleteStudentId" + studentId)
+            let optionElement2 = document.getElementById("updateStudentId" + studentId)
+            rowElement.remove()
+            optionElement.remove()
+            optionElement2.remove()
             console.log(data)
         },
 

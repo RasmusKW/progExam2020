@@ -85,7 +85,7 @@ public class StudentController
     {
 
         studentService.deleteById(message.getStudentId());
-        return ResponseEntity.ok("bye");
+        return ResponseEntity.ok(message);
 
     }
 }
