@@ -2,32 +2,71 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Eksamens Opgave</title>
+    <title>Rasmus Eksamen</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Using bootstrap to make the project look nicer overall   -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!--  Getting my main.js javascript  file loaded  -->
     <script th:src="@{/js/main.js}"></script>
+
+    <!--  Getting my main.css css file loaded  -->
     <link th:href="@{/css/main.css}">
 </head>
-<!--    thymeleaf injected header    -->
+
+<!--------- thymeleaf injected header from the fragments.html  ----------->
 <header th:replace="fragments/fragments.html :: header"></header>
 <body>
-<!--    section containing input form for a student    -->
-<section class="students-creator">
 
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
 
-    <!------------------------------------------------------ Add Student ---------------------------------------------------------------------->
-    <h6>Add Student</h6>
-    <form id="studentform" action="#">
-        <input type="text" name="name" placeholder="name" id="studentName">
-        <input type="email" name="email" placeholder="email" id="studentEmail">
-        <select name="supervisorId" id="supervisorId">
-            <option th:each="supervisor:${supervisors}"  th:text="'Supervisor: ' + ${supervisor.getName()}" th:value="${supervisor.getSupervisorId()}"></option>
-        </select>
+        <!------------------------------------------------------ Add Student ---------------------------------------------------------------------->
 
-        <input type="submit" onclick="addStudent()" value="New Student">
-    </form>
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <section class="students-creator">
+                <h6>Add Student</h6>
+                <form id="studentform" action="#">
+                    <input type="text" name="name" placeholder="name" id="studentName">
+                    <input type="email" name="email" placeholder="email" id="studentEmail">
+                    <select name="supervisorId" id="supervisorId">
+                        <option th:each="supervisor:${supervisors}"  th:text="'Supervisor: ' + ${supervisor.getName()}" th:value="${supervisor.getSupervisorId()}"></option>
+                    </select>
+
+                    <input type="submit" onclick="addStudent()" value="New Student">
+                </form>
+                <hr class="my-4">
+            </section>
+        </div>
+
+        <!------------------------------------------------------ Student Table ---------------------------------------------------------------------->
+
+        <div class="shadow p-3 mb-5 bg-white rounded">
+            <section class="student-table">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Mail</th>
+                        <th scope="col">Supervisor</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    <tr th:id="'myRowId' + ${student.getStudentId()}" th:each="student: ${students}">
+                        <td th:text="${student?.getStudentName()}"></td>
+                        <td th:text="${student?.getStudentEmail()}"></td>
+                        <td th:text="${student?.getSupervisor().getName()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
 
     <!------------------------------------------------------ Update Student ---------------------------------------------------------------------->
+
+    <div class="shadow p-3 mb-5 bg-white rounded">
+    <section class="students-update">
     <h6>Update Student</h6>
     <form id="updateform" action="#">
 
@@ -47,9 +86,14 @@
     </form>
 
 
-
+    <hr class="my-4">
+    </section>
+    </div>
 
     <!------------------------------------------------------ Delete Student ---------------------------------------------------------------------->
+
+    <div class="shadow p-3 mb-5 bg-white rounded">
+    <section class="students-delete">
     <h6>Delete Student</h6>
     <form id="deleteform" action="#">
         <select name="studentId" id="deleteId">
@@ -62,31 +106,14 @@
         <input type="submit" onclick="deleteStudent()" value="Delete Student">
     </form>
 
-</section>
-
-<!------------------------------------------------------ Student Table ---------------------------------------------------------------------->
-<section class="student-table">
-    <table>
-        <thead>
-        <tr>
-        <th>Navn</th>
-        <th>Mail</th>
-        <th>Supervisor</th>
-        </tr>
-        </thead>
-        <tbody id="tableBody">
-        <tr th:id="'myRowId' + ${student.getStudentId()}" th:each="student: ${students}">
-            <td th:text="${student?.getStudentName()}"></td>
-            <td th:text="${student?.getStudentEmail()}"></td>
-            <td th:text="${student?.getSupervisor().getName()}"></td>
-        </tr>
-        </tbody>
-    </table>
-</section>
-
+    </section>
+    </div>
+    <hr class="my-4">
+    </div>
+</div>
 </body>
 
-<!---->
+<!-------------- Scripts --------------->
 <script>
     function myFunction() {
 
@@ -95,15 +122,15 @@
         console.log(rowElement.children)
         var studentName = rowElement.children[0].innerHTML;
         var studentEmail = rowElement.children[1].innerHTML;
-        // console.log(rowElement.childNodes)
-        // console.log(studentEmail)
         document.getElementsByName('name')[1].value = studentName;
         document.getElementsByName('email')[1].value = studentEmail;
     }
 </script>
+
 <script>
     preventFormDefault($("#studentform"));
     preventFormDefault($("#updateform"));
     preventFormDefault($("#deleteform"));
 </script>
+
 </html>

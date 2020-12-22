@@ -1,6 +1,6 @@
 package com.example.exam.model;
 
-
+//Message class used with javascript
 public class Message {
 
     private String studentName;

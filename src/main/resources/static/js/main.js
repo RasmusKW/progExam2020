@@ -8,6 +8,7 @@ function preventFormDefault(form)
 
 function addStudent()
 {
+    //this gets the values with ajax based on id's
     let studentName = $("#studentName").val();
     let studentEmail = $("#studentEmail").val();
     let supervisorId = $("#supervisorId").val();
@@ -22,24 +23,25 @@ function addStudent()
         }),
         success:function (data) {
             console.log(data)
+            //Here i make the student selector able to fluidly update when a student is added
             let selectElement = document.getElementById("updateId")
             let optionElement = document.createElement("option")
-
 
             optionElement.id = "updateStudentId" + data.studentId
             optionElement.innerHTML = "New Student: " + data.studentName
             optionElement.value = data.studentId
             selectElement.appendChild(optionElement)
 
+            //The same but with the delete student selector
             let deleteSelectElement = document.getElementById("deleteId")
             let deleteOptionElement = document.createElement("option")
-
 
             deleteOptionElement.id = "deleteStudentId" + data.studentId
             deleteOptionElement.innerHTML = "New Student: " + data.studentName
             deleteOptionElement.value = data.studentId
             deleteSelectElement.appendChild(deleteOptionElement)
 
+            //This makes the student table fluidly update when a new student is added
             let tableBodyElement = document.getElementById("tableBody")
             let tableRowElement = document.createElement("TR")
 
@@ -49,7 +51,6 @@ function addStudent()
             let emailDataElement = document.createElement("TD")
             let supervisorDataElement = document.createElement("TD")
 
-
             nameDataElement.innerHTML = data.studentName
             emailDataElement.innerHTML = data.studentEmail
             supervisorDataElement.innerHTML = data.supervisor.name
@@ -58,7 +59,6 @@ function addStudent()
             tableRowElement.appendChild(supervisorDataElement)
             tableBodyElement.appendChild(tableRowElement)
 
-
         },
 
         error:function(data) {
@@ -66,10 +66,7 @@ function addStudent()
         }
     })
 
-
-
 }
-
 
 
 function updateStudent()
@@ -90,6 +87,7 @@ function updateStudent()
         }),
         success:function (data) {
             console.log(data)
+            //this makes the student table fluidly update when a student is updated
             let rowElement = document.getElementById("myRowId" + studentId)
             let optionElement = document.getElementById("updateStudentId" + studentId)
             optionElement.innerHTML = data.studentName
@@ -117,6 +115,7 @@ function deleteStudent()
             studentId: studentId,
         }),
         success:function (data) {
+            //this makes the student table fluidly update when a student is deleted(removed)
             let rowElement = document.getElementById("myRowId" + studentId)
             let optionElement = document.getElementById("deleteStudentId" + studentId)
             let optionElement2 = document.getElementById("updateStudentId" + studentId)
@@ -130,7 +129,5 @@ function deleteStudent()
             console.log(data)
         }
     })
-
-
 
 }

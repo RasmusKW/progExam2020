@@ -7,15 +7,16 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity //Annotating with @Entity to specify that this class is an entity type
+//The entity type describes the mapping between the actual persistable domain model object and a database table row.
 public class Supervisor
 {
     /***************************************************  Fields ********************************************************************/
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "supervisor_id")
-    private long supervisorId;
+    @Id //The @Id is the entity identifier which models the primary key of an entity, used to identify each specific entity
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //setting the generation of the primary key to be GenerationType.IDENTITY which makes it auto increment
+    @Column(name = "supervisor_id") //assigning the column name
+    private long supervisorId; //variable name to reference in our program
 
     private String name;
 
@@ -24,11 +25,12 @@ public class Supervisor
     @OneToMany(cascade = CascadeType.DETACH, mappedBy = "supervisor" ) //Cascade type detach, because we dont want to delete a supervisor,
     // when a student is deleted and vice versa.
     @Nullable // nullable so that we can delete the student, without causing error.
-    @JsonManagedReference("supervisor")
+    @JsonManagedReference("supervisor") //Using Jackson to handle relations
     private Set<Student> students = new HashSet<>();
 
 
     /***************************************************  Constructor and Methods ****************************************************/
+
 
     public Supervisor(long supervisorId, String name) {
         this.supervisorId = supervisorId;

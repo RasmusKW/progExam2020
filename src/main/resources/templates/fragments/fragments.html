@@ -1,12 +1,19 @@
 <head xmlns:th="http://www.thymeleaf.org" >
-
+<!-- Simple fragment used for the header just to show how fragments works-->
 <header th:fragment="header">
-    <span style="text-align: center; display: grid">
-        <a style="float: left" id="date">Dato 22/12/2020</a>
-        <a id="name"> Programmerings Eksamen 2020/2021 : JPA/Hibernate/</a>
-        <a style="float: right" id="participants"> Rasmus Wedelheim</a>
-    </span>
+    <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title">Programmerings Eksamen 2020/2021</h5>
+            <p class="card-text">Author: Rasmus Wedelheim</p>
+            <p class="card-text">Date: 22/12/2020</p>
+            <p class="card-text">Topics Covered: Spring Boot MVC (w. Database), RestController, AJAX, JS, Json, Thymeleaf, HTML&CSS</p>
+        </div>
+
+    </div>
 </header>
 
 
 </head>
+
+
+

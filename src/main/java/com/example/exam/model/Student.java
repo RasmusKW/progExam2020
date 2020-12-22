@@ -4,8 +4,6 @@ package com.example.exam.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.Nullable;
-import net.bytebuddy.implementation.bind.annotation.Super;
-
 import javax.persistence.*;
 
 @Entity
@@ -30,7 +28,7 @@ public class Student
     @JsonBackReference("supervisor")
     private Supervisor supervisor;
 
-    /******************************* Constructor and Methods ******************************/
+    /******************************* Constructors and Methods ******************************/
 
     public Student(Long studentId, String studentName, String studentEmail, Supervisor supervisor)
     {
@@ -76,11 +74,13 @@ public class Student
 
 
 
-    public String getStudentEmail() {
+    public String getStudentEmail()
+    {
         return studentEmail;
     }
 
-    public void setStudentEmail(String studentEmail) {
+    public void setStudentEmail(String studentEmail)
+    {
         this.studentEmail = studentEmail;
     }
 
